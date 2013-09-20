@@ -1,0 +1,9 @@
+=== Mailing lists ===
+
+There are 2 mailing lists for flamingo-mc. See the [[Mailinglist page|MailingLists]] for details.
+
+=== Bug Tracker ===
+User can contribute to this open source project by reporting bugs. For Flamingo 4 we use Git to manage bugs, issues and new features. If you found a bug or you like to see a feature implemented in Flamingo 4, please report it in [[Issues | http://github.com/flamingo-geocms/flamingo/issues]].
+
+=== Developers Guide ===
+If you want to get involved as a Developer then you could start with getting the project up and running by building Flamingo 4 from source. See the [[Buildfromsource]] page for details.

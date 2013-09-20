@@ -1,0 +1,47 @@
+Before building from source you must install a commandline git client and Apache Maven
+
+=== Getting the code ===
+
+Getting the code is easily done by the following command.
+{{{git clone git@github.com:flamingo-geocms/flamingo.git}}}
+
+=== Building ===
+
+When the git repo is cloned. Go to the created directory and run:
+{{{mvn install}}}
+
+=== Running ===
+
+Before you can deploy these WARs in a Tomcat server, setup the database as explained on [[UsePostgreSQL]]. Also copy the java mail binary to the Tomcat libs directory. It can be found at: https://java.net/projects/javamail/pages/Home
+
+Refer to the `META-INF/context.xml` file in the WAR and the Tomcat documentation for further configuration information such as additional authentication methods.
+
+Login to the `viewer-admin` application using the username and password `admin`. You should change this password immediately. To reset a password change the SHA-1 hash stored in the `user_` table. Use the following command to generate a SHA-1 hash:
+
+{{{echo -n mypassword | sha1sum}}}
+
+=== Monitoring ===
+
+The following is optional. If you want to receive emails when services added in the geo services registry go offline:
+
+1. Create a user with your e-mail adress and add the user to the ServiceAdmin group
+
+2. Add the following to the server.xml of Tomcat and restart Tomcat:
+
+{{{
+    <Server ...>
+        ...
+        <GlobalNamingResources>        
+            <Resource name="mail/session" 
+                    auth="Container"
+                    type="javax.mail.Session"
+                    mail.smtp.host="smtp.yourcompany.com" 
+            />        
+        </GlobalNamingResources>
+        ...
+    </Server>
+}}}
+
+See the JavaMail spec appendix A for additional attributes you can use to configure the !JavaMail resource.
+
+3. Customize the context parameters of the `viewer-admin` webapp to change the from address, subject and checking frequency. For Tomcat you can edit these in the `<Context>` element which is stored in the Tomcat `conf/` directory (using default settings in `conf/Catalina/localhost/viewer-admin.xml`) which are not overwritten when a new WAR is deployed (but are removed when you undeploy the web application!).

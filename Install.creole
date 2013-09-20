@@ -1,0 +1,144 @@
+Short manual for installing Flamingo4
+
+=== 0. Download Flamingo ===
+Download the version of Flamingo of your choice. If you're uncertain which version suits you, we recommend using the stable version. This version is tested en considered usable for the public. The releases can be found here: [[Releases|http://github.com/flamingo-geocms/flamingo/releases]]
+
+(Older versions can be found here: [[Archive|http://svn.flamingo-mc.org/trac/wiki/Download]]. )
+
+The release contains:
+* 2 .war-files
+ ** viewer-admin.war: The administrative application. 
+ ** viewer.war: The viewer application
+
+**When the version of Flamingo is 4.3 or later, only 2 war files are zipped. The following is not zipped any more.**
+
+* Deps: dependencies needed for running the applications
+* Database: directory with sql scripts for creating a new database. For updating an existing database, please see [[Update]]
+
+=== 1. Install Java,Tomcat and a database ===
+Install:
+* Java (JDK 1.6 or newer)
+* Tomcat (6 or newer)
+* A database, currently supported
+ ** Postgres (8.4 or newer)
+ ** Oracle (10g or newer)
+ ** MSSQL (2000 or higher)
+
+=== 2. Create Database and insert data ===
+This section is divided by the different options of the supported databases.
+In the packaged zip, there is a directory called "database", which contains scripts for each supported database.
+
+**Postgres**
+
+1. Create a user in the Postgres instance
+
+{{{CREATE USER flamingo4 WITH PASSWORD 'secret' CREATEDB;}}}
+
+2. Login with that created user to make sure all objects created are owned by this user. You can do this by using 
+
+{{{SET SESSION AUTHORIZATION flamingo4;}}}
+
+3. Create a Database:
+
+{{{CREATE DATABASE flamingo4;}}}
+
+**Skip the next steps (4 and 5) when the version is 4.3 or later. All the needed Database objects are created when the application is started. Also a default admin user is created. Username: 'admin' Password: 'flamingo' Don't forget to change it! **
+
+4. Execute downloaded script (in "database" directory).
+
+5. Insert admin user/password by creating a sha-1 digest. (default the password is 'admin')
+Here you can create your own sha-1 digest from any password you like to use: [[http://hash.online-convert.com/sha1-generator]]
+
+{{{insert into user_(username, password) values ('admin', '<digest>');}}}
+
+**Oracle**
+
+ToDo
+
+**MSSQL**
+
+1. Create a user (for example: flamingo)
+
+2. Create a database owned by this user (for example, also named flamingo)
+
+**Skip the next steps when the version is 4.3 or later**
+
+3. Run the scripts (with the created user) contained in the "database" directory.
+
+
+For more details see:
+* For postgres: [[UsePostgreSQL]]
+* For MS SQL server: [[UseMSSQL]]
+
+=== 3. Prepare Tomcat === 
+Download the dependency jars needed in tomcat: [[Deps | http://documentation.flamingo-mc.org/deps.zip]]
+
+1. In the 'unzipped deps' you'll find 2 .jar files in: debs/lib/ Copy both files to the tomcat 'lib' folder (for example: /usr/share/tomcat6/lib/)
+
+2. In the 'unzipped deps' you'll need to copy the .jar files from debs/endorsed to the tomcat 'endorsed' folder. This dir is configured in tomcat as -Djava.endorsed.dirs. Default tomcat searches for the endorsed directory in the [Catalina_base]/endorsed, you can then just create a folder named “endorsed” in [Catalina_base]. In ubuntu this is /usr/share/tomcat6/ by default, you can create a dir called 'endorsed' there and place the .jar files there. For windows (by default) this will be the tomcat install directory. There you can create a 'endorsed' dir and place the .jar files there.
+
+3. Edit server.xml (on Ubuntu systems you can find it in: '/etc/tomcat6/server.xml') and add the Database connection settings. Search for the Search for the <GlobalNamingResources> and add the following element (use your own password instead of "secret"):
+
+
+**For Postgres**
+
+{{{
+   <Resource 
+	name="jdbc/geo_viewer"
+	auth="Container"
+	type="javax.sql.DataSource"
+	username="flamingo4"
+	password="secret"
+	driverClassName="org.postgresql.Driver"
+	url="jdbc:postgresql://localhost:5432/flamingo4"
+	maxActive="40"
+	validationQuery="select 1"
+	timeBetweenEvictionRunsMillis="30000"
+	minEvictableIdleTimeMillis="5000"
+/>
+}}}
+
+**For Oracle**
+
+{{{
+<Resource 
+	name="jdbc/geo_viewer" 
+	auth="Container" 
+	type="javax.sql.DataSource" 
+	username="flamingo"  
+	password="secret" 
+	driverClassName="oracle.jdbc.OracleDriver"
+	url="jdbc:oracle:thin:@serverl:1526/PNBT"
+	maxActive="100" 
+	validationQuery="select 1 from dual"
+	timeBetweenEvictionRunsMillis="30000" 
+	minEvictableIdleTimeMillis="5000"
+/>
+}}} 
+
+**For MSSQL
+
+{{{
+<Resource name="jdbc/geo_viewer"
+	auth="Container"
+	type="javax.sql.DataSource"
+	username="<<USERNAME>>"
+	password="<<PASSWORD>>"
+	driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+	url="jdbc:sqlserver://<<HOST>>;database=<<DATABASE_NAME>>;integratedSecurity=false;"
+	maxActive="40"
+	validationQuery="select 1"
+	timeBetweenEvictionRunsMillis="30000"
+	minEvictableIdleTimeMillis="5000"
+ />
+}}}
+
+=== 4. Deploy applications ===
+1. Copy the 2 *.war files (viewer.war and viewer-admin.war) to the tomcat webapps directory
+
+=== 5. Test application ===
+1. Open a webbrowser and go to the page: http://<tomcathost>:<tomcatport>/viewer-admin
+
+2. A login page is shown. If flamingo 4.3 or later is installed the default password is 'flamingo' and the username 'admin'. **DON'T FORGET TO CHANGE** When using a earlier version of Flamingo you have created the password in one of the steps mentioned earlier.
+
+3. If you can't login, properly something is wrong... Check the log file 'geo-viewer-admin.log' in the <catalina-base>/log directory.

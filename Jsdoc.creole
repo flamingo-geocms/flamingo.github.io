@@ -1,0 +1,5 @@
+Genereren van JavaScript documentatie op basis van JSDoc tags
+
+Download the tool at http://code.google.com/p/jsdoc-toolkit/
+
+Here http://code.google.com/p/jsdoc-toolkit/wiki/TagReference Wiki of jsdoc-toolkit some documentation can be found.

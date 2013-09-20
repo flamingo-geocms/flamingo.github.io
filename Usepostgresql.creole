@@ -1,0 +1,33 @@
+=== Setting up a PostgreSQL database with example application ===
+
+1. Create a user (for example: flamingo)
+
+2. Create a database owned by this user (for example, also named flamingo)
+
+**Skip step 3 and 4 when the version is 4.3 or later, the database is auto created**
+
+3. Connect to the database as this user. Alternatively, insert a `SET SESSION AUTHORIZATION flamingo;` command before the next step. Make sure the tables in the database are owned by the flamingo user.
+
+4. Run the [[SQL script| http://svn.flamingo-mc.org/trac/raw-attachment/wiki/UsePostgreSQL/flamingo_postgresql-4.2.zip]] with the example application
+
+5. Download the PostgreSQL JDBC driver from http://jdbc.postgresql.org/download.html and save it in the Tomcat lib directory
+
+6. Setup the JNDI data source in the `GlobalNamingResources` in Tomcat server.xml as follows:
+
+{{{
+        <Resource name="jdbc/geo_viewer"
+            auth="Container"
+            type="javax.sql.DataSource"
+            username="flamingo"
+            password="flamingo"
+            driverClassName="org.postgresql.Driver"
+            url="jdbc:postgresql://localhost:5432/flamingo"
+            maxActive="40"
+            validationQuery="select 1"
+
+            timeBetweenEvictionRunsMillis="30000"
+            minEvictableIdleTimeMillis="5000"
+        /> 
+}}}
+
+//Make sure to add the `<Resource>` element as child of the already existing `<GlobalNamingResources>` element.//

@@ -1,0 +1,17 @@
+== Documentation ==
+* [[Installation documentation | Install]]
+* [[Update documentation | Update]]
+* [[HowtoStandaloneViewer]]
+* [[UsePostgreSQL]] Setting up a PostgreSQL database with example data
+* [[UseMSSQL]] Setting up a MS SQL Server database with example data]
+
+* http://documentation.flamingo-mc.org/flamingo4g/docs/conf-doc/index.html Configuration documentation Flash-motor
+* http://documentation.flamingo-mc.org/flamingo4g/docs/ref-doc/index/General.html Api- documentation Flash-motor
+* [[JSDoc]] Generate JavaScript documentation with JSDoc tags]
+* [[SimpleConfigConvertor]] convert config xml from 3.x to 4.x]
+
+== User guides ==
+
+In the viewer-admin application click on the question mark item to open the manual. Additional guides are listed here:
+
+* [[SLD support for Flamingo | http://svn.flamingo-mc.org/trac/wiki/SLD_Support_en]] (also available in [[Dutch | http://svn.flamingo-mc.org/trac/wiki/SLD_Support_en]])

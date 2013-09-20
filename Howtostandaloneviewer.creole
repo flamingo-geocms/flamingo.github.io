@@ -1,0 +1,23 @@
+=== Introduction
+
+A viewer standalone (with no server functionality and no application server) with flamingo is possible. It is designed with this in mind, and here you find how you can do it and look at an example.
+
+=== Howto
+* Get the viewer and viewer-admin up and running
+* Configure the application as needed (without the server-dependent components!)
+* Save the html to a folder (for now, let's call it ''flamingo_standalone'')
+* Copy(/check out) the viewer-html into flamingo_standalone 
+* Get the following files from firebug and put them into the viewer-html folder
+** Components.js
+** flamingo-min.js and/or openlayers-min.js
+** viewer-min.js
+* Create a directory ''viewer'' in flamingo_standalone and copy the flamingo folder (from the viewer project, with .swf's in it) into it
+* Copy the folder extjs (from viewer project) into ''flamingo_standalone'' 
+* Copy the folder resources(from viewer project) into ''flamingo_standalone''. Also copy (if required) openlayers.css in the folder resources/css.
+* Rename the .htm file in ''flamingo_standalone'' and correct all references to the files so they can be found.
+
+
+=== Example
+* http://flamingo.b3p.nl/flamingo_standalone/
+
+You can switch to flamingo/openlayers if you append ?mode=flamingo or ?mode=openlayers to the url. Mapsize is made smaller (60%/60%) to prove the map can be rendered to a smaller div.

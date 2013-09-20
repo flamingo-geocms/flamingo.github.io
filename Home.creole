@@ -1,0 +1,17 @@
+Flamingo 4 is an open source geo content management solution. It allows non-technical administrators to manage the way geospatial data is published in the Flamingo 4 web-viewer. The web based viewer can be configured by dragging and dropping components in a layout.
+
+We are still developing cool new things in Flamingo 4. Also the Wiki is getting more complete every day. Because the project is founded in the Netherlands, some documentation is still in Dutch. Our intention is to complete the Wiki with English documentation. Any help is appreciated. 
+
+Here are some useful links:
+
+*[[Start]]
+*[[Download]]
+*[[Documentation]]
+*[[Get involved | GetInvolved]]
+*[[Mailing lists | MailingLists]]
+*[[About Flamingo 4|About]]
+
+=== Future development ===
+
+*[[Roadmap | http://github.com/flamingo-geocms/flamingo/issues/milestones]]
+*[[Proposals |Proposals]]

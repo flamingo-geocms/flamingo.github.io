@@ -1,0 +1,42 @@
+Follow the following steps to set up Flamingo4 using MS SQL server (only works for 4.2)
+== SQL Server ==
+1. Create a user (for example: flamingo)
+
+2. Create a database owned by this user (for example, also named flamingo)
+
+3. Run the following scripts (with the created user):
+
+[[create objects | http://svn.flamingo-mc.org/trac/attachment/wiki/UseMSSQL/01_flamingo_mssql_create_objects.zip]]
+
+[[Data | http://svn.flamingo-mc.org/trac/attachment/wiki/UseMSSQL/02_flamingo_mssql_data.zip]]
+
+[[Constraints | http://svn.flamingo-mc.org/trac/attachment/wiki/UseMSSQL/03_flamingo_mssql_create_constraints.zip]]
+
+
+== Tomcat ==
+4. Make sure you copy the sqljdbc4.jar to the <!TomcatDir>/lib dir
+
+5. Setup the JNDI data source in the `GlobalNamingResources` in Tomcat server.xml as follows
+
+{{{
+<Resource name="jdbc/geo_viewer"
+    auth="Container"
+    type="javax.sql.DataSource"
+    username="<<USERNAME>>"
+    password="<<PASSWORD>>"
+    driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+    url="jdbc:sqlserver://<<HOST>>;database=<<DATABASE_NAME>>;integratedSecurity=false;"
+    maxActive="40"
+    validationQuery="select 1"
+    timeBetweenEvictionRunsMillis="30000"
+    minEvictableIdleTimeMillis="5000" />	
+}}}
+
+//Make sure to add the `<Resource>` element as child of the already existing `<GlobalNamingResources>` element.//
+
+6. Because the persistence classes are not yet ready for MS-SQL server copy the file (and replace): [attachment:viewer-config-persistence.zip] in the dirs:
+
+<!TomcatDir>/webapps/viewer/WEB-INF/lib [[BR]]
+<!TomcatDir>/webapps/viewer-admin/WEB-INF/lib [[BR]]
+
+7. Restart tomcat

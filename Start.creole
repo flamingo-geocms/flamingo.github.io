@@ -1,0 +1,10 @@
+=== Download and Install ===
+To get started with Flamingo 4 download the binaries and follow the [/wiki/Install installation documentation]. The releases can be found here: [[Releases|http://github.com/flamingo-geocms/flamingo/releases]]
+
+(Older versions can be found here: http://svn.flamingo-mc.org/trac/wiki/Download|Archive)
+
+=== Build your own ===
+If you want to change things in the code or build your own version you can download the code with a GIT client. See https://github.com/flamingo-geocms/flamingo
+
+More info about building from source can be found [[Build from source | BuildFromSource]] page.
+
